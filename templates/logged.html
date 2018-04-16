@@ -1,0 +1,5 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Hello {{ user }} your password is: {{ pas }}</h1>
+  <h1>Click here to log out: <a href="{{ url_for('logout') }}">log-out</a></h1>
+{% endblock %}
