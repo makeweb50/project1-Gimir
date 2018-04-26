@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 app = Flask(__name__)
-app.static_folder = 'static'
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -39,8 +38,6 @@ def logout():
 def loginn():
     return render_template('login.html', title="login page")
 @app.route("/signupp")
-def signupp():
-    return render_template('signup.html', title="signup page")
 
 @app.route("/login", methods=('GET', 'POST'))
 def login():
@@ -64,5 +61,18 @@ def signup():
     return redirect(url_for('signupp'))
 
 
-if __name__=='__main__':
-    app.run()
+
+#   SNIPPET FOR CAESH   #
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
+#   SNIPPET FOR CAESH   #
