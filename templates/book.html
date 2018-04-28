@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block style %}<link rel="stylesheet" href="{{ url_for('static', filename='') }}">{% endblock %}
+{% block content %}
+  <h3>{{ name }}</h3>
+  <h3>{{ author }}</h3>
+  <h3>{{ data }}</h3>
+  <h3>{{ isbn }}</h3>
+  {% for comment in comments %}
+    <h5>{{ comment[0] }}</h5>
+    <h5>{{ comment[1] }}</h5>
+    <h5>{{ comment[2] }}</h5>
+  {% endfor %}
+{% endblock %}

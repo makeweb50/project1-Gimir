@@ -22,7 +22,10 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    return render_template("index.html", title="Home page")
+    if 'username' not in session:
+        return render_template("index.html", title="start page")
+    else:
+        return redirect(url_for('logged'))
 
 @app.route("/logged")
 def logged():
@@ -57,9 +60,28 @@ def signup():
     if request.method == 'POST':
         db.execute("INSERT INTO users (name, password) VALUES (:name, :password)",
                     {"name": request.form['name'], "password": request.form['password']})
+        db.commit()
         return redirect(url_for('login'))
     return redirect(url_for('signupp'))
 
+@app.route("/book-<string:book>")
+def book(book):
+    db.execute("SELECT * FROM books WHERE title = (%s)", (book,));
+    oneBook = db.fetchall()
+    isbn = oneBook[0][1]
+    db.execute("SELECT * FROM comments WHERE book_isbn = (%s)", (isbn,));
+    comment = db.fetchall()
+    comments = []
+    for com in comment:
+        db.execute("SELECT name FROM users WHERE id = (%i)", (com[0],));
+        user = db.fetchall()
+        template = {
+            'user': user[0][1],
+            'grade': com[1],
+            'comment': com[2]
+        }
+        comments.append(template)
+    return render_template('book.html', title=book, name=oneBook[0][2], author=oneBook[0][3], data=oneBook[0][4], isbn=isbn, comments=comments)
 
 
 #   SNIPPET FOR CAESH   #
