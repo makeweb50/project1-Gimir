@@ -1,0 +1,64 @@
+body {
+  background-image: url("../img/backgrounds/books2.jpeg");
+  padding-top: 200px;
+  font-family: 'Roboto', sans-serif;
+}
+.search {
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+
+  input[type="search"] {
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 30px;
+    border: none;
+  }
+  input[type="submit"] {
+    width: 20%;
+    height: 50px;
+    background-color: rgb(43, 177, 113);
+    border: none;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    padding: 10px 0 10px 0;
+  }
+  input[type="submit"]:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}
+a {
+  text-decoration: none;
+}
+.logout {
+  width: 15%;
+  height: 60px;
+  background-color: white;
+  box-sizing: border-box;
+  margin: 50px auto;
+  position: relative;
+
+  button {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(43, 177, 113);
+    padding: 10px 0 10px 0;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border: none;
+  }
+  button:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}

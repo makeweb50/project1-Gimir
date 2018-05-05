@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import requests
 from flask import Flask, session, render_template, request, redirect, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
@@ -20,6 +21,8 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+
+
 @app.route("/")
 def index():
     if 'username' not in session:
@@ -27,20 +30,11 @@ def index():
     else:
         return redirect(url_for('logged'))
 
-@app.route("/logged")
-def logged():
-    return render_template("logged.html", user=session['username'], pas=session['password'], title="logged page")
 
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    session.pop('password', None)
-    return redirect(url_for('loginn'))
 
 @app.route("/login")
 def loginn():
     return render_template('login.html', title="login page")
-@app.route("/signupp")
 
 @app.route("/login", methods=('GET', 'POST'))
 def login():
@@ -64,25 +58,57 @@ def signup():
         return redirect(url_for('login'))
     return redirect(url_for('signupp'))
 
+
+
+@app.route("/logged")
+def logged():
+    return render_template("logged.html", title="logged page")
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    session.pop('password', None)
+    return redirect(url_for('loginn'))
+
+
 @app.route("/book-<string:book>")
 def book(book):
-    db.execute("SELECT * FROM books WHERE title = (%s)", (book,));
-    oneBook = db.fetchall()
-    isbn = oneBook[0][1]
-    db.execute("SELECT * FROM comments WHERE book_isbn = (%s)", (isbn,));
-    comment = db.fetchall()
-    comments = []
-    for com in comment:
-        db.execute("SELECT name FROM users WHERE id = (%i)", (com[0],));
-        user = db.fetchall()
-        template = {
-            'user': user[0][1],
-            'grade': com[1],
-            'comment': com[2]
-        }
-        comments.append(template)
-    return render_template('book.html', title=book, name=oneBook[0][2], author=oneBook[0][3], data=oneBook[0][4], isbn=isbn, comments=comments)
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    else:
+        oneBook = db.execute("SELECT * FROM books WHERE title = (:book)",
+        {"book": book}).fetchall()
+        if len(oneBook) is not 0:
+            isbn = oneBook[0][1]
+            comment = db.execute("SELECT * FROM comments WHERE book_isbn = (:isbn)", {"isbn": isbn}).fetchall()
+            comments = []
+            if len(comment) is not 0:
+                for com in comment:
+                    iduser = com[0]
+                    usern = db.execute("SELECT * FROM users WHERE id = (:iduser)", {"iduser": iduser}).fetchall()
+                    template = {
+                        'usern': usern[0][1],
+                        'grade': com[1],
+                        'comment': com[2]
+                    }
+                    comments.append(template)
 
+            res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "uf44igLdn7CKCpDscLpg", "isbns": isbn})
+            data = res.json()
+            av_rating = data["books"][0]["average_rating"]
+            wr_count = data["books"][0]["work_ratings_count"]
+            return render_template('book.html', title=book, name=oneBook[0][2], author=oneBook[0][3], data=oneBook[0][4], isbn=isbn, comments=comments, avRating=av_rating, wrCount=wr_count)
+        return redirect(url_for('logged'))
+
+
+
+@app.route("/booklist", methods=('GET', 'POST'))
+def booklist():
+    if request.method == 'POST':
+        book = request.form['search']
+        oneBook = db.execute("SELECT * FROM books WHERE title LIKE (:book) OR isbn LIKE (:book) OR author LIKE (:book)",
+        {"book": '%' + book + '%'}).fetchall()
+        return render_template('booklist.html', books=oneBook)
 
 #   SNIPPET FOR CAESH   #
 @app.context_processor

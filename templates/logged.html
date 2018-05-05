@@ -1,5 +1,22 @@
 {% extends "layout.html" %}
+{% block style %}<link rel="stylesheet" href="{{ url_for('static', filename='style/style_search.css') }}">{% endblock %}
 {% block content %}
-  <h1>Hello {{ user }} your password is: {{ pas }}</h1>
-  <h1>Click here to log out: <a href="{{ url_for('logout') }}">log-out</a></h1>
+
+
+  <div class="search">
+    <form action="{{ url_for('booklist') }}" method="post">
+      <input type="search" name="search" placeholder="Search for a book">
+      <input type="submit" value="Search">
+    </form>
+  </div>
+
+  <div class="logout">
+    <a href="{{ url_for('logout') }}">
+      <button type="button" name="button">
+        Log out
+      </button>
+    </a>
+  </div>
+
+
 {% endblock %}

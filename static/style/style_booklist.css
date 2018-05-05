@@ -1,0 +1,79 @@
+body {
+  background: url("../img/backgrounds/books2.jpeg") no-repeat center center fixed;
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  margin: 0; }
+  body a {
+    padding: 0;
+    margin: 0;
+    text-decoration: none; }
+  body .book {
+    width: 20%;
+    margin: 10px 2.5% 10px 2.5%;
+    height: 150px;
+    box-sizing: border-box;
+    float: left;
+    background-color: rgba(54, 58, 59, 0.9);
+    overflow: hidden; }
+    body .book h2, body .book h3 {
+      text-align: center;
+      color: white; }
+  body .book:hover {
+    background-color: rgba(54, 58, 59, 0.8);
+    cursor: pointer; }
+
+.nav {
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  padding: 5px;
+  position: relative;
+  position: fixed;
+  background-color: #303030; }
+  .nav h1 {
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    margin: 0; }
+  .nav h1:hover {
+    opacity: 0.8; }
+  .nav .home {
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    left: 0; }
+  .nav .logout {
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    right: 0; }
+
+.search {
+  width: 50%;
+  position: relative;
+  margin: 0 auto; }
+  .search input[type="search"] {
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 30px;
+    border: none; }
+  .search input[type="submit"] {
+    width: 20%;
+    height: 50px;
+    background-color: #2bb171;
+    border: none;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    padding: 10px 0 10px 0; }
+  .search input[type="submit"]:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+/*# sourceMappingURL=style_booklist.css.map */

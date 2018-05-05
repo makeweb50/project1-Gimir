@@ -1,0 +1,58 @@
+body {
+  background-image: url("../img/backgrounds/books2.jpeg");
+  padding-top: 200px;
+  font-family: 'Roboto', sans-serif; }
+
+.search {
+  width: 50%;
+  margin: 0 auto;
+  position: relative; }
+  .search input[type="search"] {
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 30px;
+    border: none; }
+  .search input[type="submit"] {
+    width: 20%;
+    height: 50px;
+    background-color: #2bb171;
+    border: none;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    padding: 10px 0 10px 0; }
+  .search input[type="submit"]:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+a {
+  text-decoration: none; }
+
+.logout {
+  width: 15%;
+  height: 60px;
+  background-color: white;
+  box-sizing: border-box;
+  margin: 50px auto;
+  position: relative; }
+  .logout button {
+    width: 100%;
+    height: 100%;
+    background-color: #2bb171;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border: none; }
+  .logout button:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+/*# sourceMappingURL=style_search.css.map */
