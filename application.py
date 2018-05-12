@@ -1,7 +1,7 @@
 import os
 import psycopg2
 import requests
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -26,7 +26,7 @@ db = scoped_session(sessionmaker(bind=engine))
 @app.route("/")
 def index():
     if 'username' not in session:
-        return render_template("index.html", title="start page")
+        return redirect(url_for('login'))
     else:
         return redirect(url_for('logged'))
 
@@ -71,44 +71,88 @@ def logout():
     return redirect(url_for('loginn'))
 
 
-@app.route("/book-<string:book>")
-def book(book):
-    if 'username' not in session:
-        return redirect(url_for('index'))
-    else:
-        oneBook = db.execute("SELECT * FROM books WHERE title = (:book)",
-        {"book": book}).fetchall()
-        if len(oneBook) is not 0:
-            isbn = oneBook[0][1]
-            comment = db.execute("SELECT * FROM comments WHERE book_isbn = (:isbn)", {"isbn": isbn}).fetchall()
-            comments = []
-            if len(comment) is not 0:
-                for com in comment:
-                    iduser = com[0]
-                    usern = db.execute("SELECT * FROM users WHERE id = (:iduser)", {"iduser": iduser}).fetchall()
-                    template = {
-                        'usern': usern[0][1],
-                        'grade': com[1],
-                        'comment': com[2]
-                    }
-                    comments.append(template)
+@app.route("/comment", methods=["POST"])
+def comment():
+    comm = request.get_json()
+    print(comm['rate'])
+    print(type(comm))
+    user = db.execute("SELECT * FROM users WHERE name = (:name)",
+    {"name": session['username']}).fetchall()
 
-            res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "uf44igLdn7CKCpDscLpg", "isbns": isbn})
-            data = res.json()
-            av_rating = data["books"][0]["average_rating"]
-            wr_count = data["books"][0]["work_ratings_count"]
-            return render_template('book.html', title=book, name=oneBook[0][2], author=oneBook[0][3], data=oneBook[0][4], isbn=isbn, comments=comments, avRating=av_rating, wrCount=wr_count)
-        return redirect(url_for('logged'))
+    iduser = user[0][0]
+
+    db.execute("INSERT INTO comments (user_id, grade, comment, book_isbn) VALUES (:user_id, :grade, :comment, :book_isbn)",
+                {"user_id": iduser, "grade": comm['rate'], "comment": comm['text'], "book_isbn": comm['isbn']})
+    db.commit()
+
+    com = db.execute("SELECT * FROM comments WHERE book_isbn = (:isbn) AND user_id = (:user)",
+    {"user": iduser, "isbn": comm['isbn']}).fetchall()
+
+    result = []
+
+    for i in com:
+        result.append({"user": session['username'], "rate": i[1], "comment": i[2], "allow": True})
+
+    return jsonify(result)
 
 
+@app.route("/book", methods=["POST"])
+def book():
 
-@app.route("/booklist", methods=('GET', 'POST'))
+    book = request.form.get("currency")
+    result = []
+    oneBook = db.execute("SELECT * FROM books WHERE title = (:book)",
+    {"book": book}).fetchall()
+    result.append({"title": oneBook[0][2], "author": oneBook[0][3], "isbn": oneBook[0][1], "year": oneBook[0][4]})
+    isbn = oneBook[0][1]
+    comment = db.execute("SELECT * FROM comments WHERE book_isbn = (:isbn)", {"isbn": isbn}).fetchall()
+    comments = []
+    if len(comment) is not 0:
+        for com in comment:
+            iduser = com[0]
+            usern = db.execute("SELECT * FROM users WHERE id = (:iduser)", {"iduser": iduser}).fetchall()
+            template = {
+                'usern': usern[0][1],
+                'grade': com[1],
+                'comment': com[2]
+            }
+            comments.append(template)
+
+    result.append(comments)
+
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "uf44igLdn7CKCpDscLpg", "isbns": isbn})
+    data = res.json()
+    result.append({"av_rating": data["books"][0]["average_rating"], "wr_count": data["books"][0]["work_ratings_count"]})
+
+    for i in comments:
+        if session['username'] in i['usern']:
+            result.append({"allow": False})
+            return jsonify(result)
+
+    result.append({"allow": True})
+    return jsonify(result)
+
+
+
+
+
+
+@app.route("/booklist", methods=["POST"])
 def booklist():
-    if request.method == 'POST':
-        book = request.form['search']
-        oneBook = db.execute("SELECT * FROM books WHERE title LIKE (:book) OR isbn LIKE (:book) OR author LIKE (:book)",
-        {"book": '%' + book + '%'}).fetchall()
-        return render_template('booklist.html', books=oneBook)
+
+    book = request.form.get("currency")
+
+    oneBook = db.execute("SELECT * FROM books WHERE title LIKE (:book) OR isbn LIKE (:book) OR author LIKE (:book)",
+    {"book": '%' + book + '%'}).fetchall()
+
+    result = []
+
+    for book in oneBook:
+        result.append({"title": book[2], "author": book[3]})
+
+    return jsonify(result)
+
+
 
 #   SNIPPET FOR CAESH   #
 @app.context_processor

@@ -1,22 +1,83 @@
 {% extends "layout.html" %}
-{% block style %}<link rel="stylesheet" href="{{ url_for('static', filename='style/style_search.css') }}">{% endblock %}
+{% block style %}
+<link href="https://fonts.googleapis.com/css?family=Lobster|Poppins" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/style_search.css') }}">
+{% endblock %}
 {% block content %}
 
+  <div class="showBook">
+    <div class="head">
+      <div class="lay">
+        <h1 id="title">Loading...</h1>
+        <h2 id="author">Loading...</h2>
+      </div>
+    </div>
+    <div class="title">
+      <h1>Info</h1>
+      <hr>
+      <div class="con">
+        <div class="left">
+          <ul>
+            <li>Year</li>
+            <li>Rating</li>
+            <li>Reviews</li>
+            <li>ISBN</li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul>
+            <li id="year">Loading...</li>
+            <li id="rating">Loading...</li>
+            <li id="review">Loading...</li>
+            <li id="isbn">Loading...</li>
+          </ul>
+        </div>
+      </div>
 
-  <div class="search">
-    <form action="{{ url_for('booklist') }}" method="post">
-      <input type="search" name="search" placeholder="Search for a book">
-      <input type="submit" value="Search">
-    </form>
+    </div>
+    <div class="title">
+      <h1>Reviews</h1>
+      <hr>
+      <div class="rates">
+
+      </div>
+      <div class="myrate">
+        <form id="rateForm">
+          <input type="text" id="rate" placeholder="Rate here from 1 to 5">
+          <input type="text" id="text" placeholder="Type your review here...">
+          <input type="submit" id="ratesub" value="RATE">
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div class="logout">
-    <a href="{{ url_for('logout') }}">
-      <button type="button" name="button">
-        Log out
-      </button>
-    </a>
+  <div class="nav" id="nnav">
+    <div class="search" id="ser">
+      <form id="form">
+        <input type="search" id="search" placeholder="Search for a book">
+        <input type="submit" id="sub" value="Search">
+      </form>
+    </div>
+
+    <div class="logout" id='log'>
+      <a href="{{ url_for('logout') }}">
+        <button type="button" name="button" id="but">
+          Log out
+        </button>
+      </a>
+    </div>
+
+    <div id="logo">
+      <h1>Teptar</h1>
+    </div>
   </div>
 
 
+  <div class="result"></div>
+
+<div id="cover" class="covdown"></div>
+{% endblock %}
+{% block jsfiles %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/books.js') }}">
+</script>
 {% endblock %}

@@ -1,20 +1,58 @@
 body {
-  background-image: url("../img/backgrounds/books2.jpeg");
-  padding-top: 200px;
-  font-family: 'Roboto', sans-serif; }
+  background: url("../img/backgrounds/books2.jpeg") no-repeat center center fixed;
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  margin: 0; }
+  body a {
+    padding: 0;
+    margin: 0;
+    text-decoration: none; }
+  body .book {
+    width: 20%;
+    margin: 10px 2.5% 10px 2.5%;
+    height: 150px;
+    box-sizing: border-box;
+    float: left;
+    background-color: rgba(54, 58, 59, 0.9);
+    overflow: hidden; }
+    body .book h2, body .book h3 {
+      text-align: center;
+      color: white; }
+  body .book:hover {
+    background-color: rgba(54, 58, 59, 0.8);
+    cursor: pointer; }
+
+#nnav {
+  width: 100%;
+  position: relative;
+  transition: 0.2s; }
+
+.nav {
+  height: 200px;
+  background-color: rgba(37, 43, 51, 0); }
+
+.sNav {
+  height: 60px;
+  box-sizing: border-box;
+  background-color: #252b33; }
 
 .search {
+  bottom: 0; }
+
+#ser {
   width: 50%;
-  margin: 0 auto;
-  position: relative; }
-  .search input[type="search"] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto; }
+  #ser input[type="search"] {
     height: 50px;
     width: 100%;
     box-sizing: border-box;
     padding: 5px;
     font-size: 30px;
     border: none; }
-  .search input[type="submit"] {
+  #ser input[type="submit"] {
     width: 20%;
     height: 50px;
     background-color: #2bb171;
@@ -27,21 +65,19 @@ body {
     color: white;
     font-size: 30px;
     padding: 10px 0 10px 0; }
-  .search input[type="submit"]:hover {
+  #ser input[type="submit"]:hover {
     opacity: 0.9;
     cursor: pointer; }
 
-a {
-  text-decoration: none; }
-
-.logout {
+#log {
   width: 15%;
-  height: 60px;
+  height: 50px;
   background-color: white;
   box-sizing: border-box;
-  margin: 50px auto;
-  position: relative; }
-  .logout button {
+  position: absolute;
+  top: 0;
+  right: 0; }
+  #log button {
     width: 100%;
     height: 100%;
     background-color: #2bb171;
@@ -50,9 +86,176 @@ a {
     font-size: 30px;
     font-weight: bold;
     color: white;
-    border: none; }
-  .logout button:hover {
+    border: none;
+    transition: 0.1s; }
+  #log button:hover {
     opacity: 0.9;
     cursor: pointer; }
+
+#logo {
+  width: 15%;
+  height: 50px;
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  box-sizing: border-box; }
+  #logo h1 {
+    color: white;
+    font-family: 'Lobster', cursive;
+    text-align: center;
+    line-height: 50px;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 7px; }
+
+.showBook {
+  display: none;
+  width: 70%;
+  position: absolute;
+  margin: auto;
+  margin-bottom: 50px;
+  left: 0;
+  right: 0;
+  top: 50px;
+  z-index: 11111;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset; }
+  .showBook hr {
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.2); }
+  .showBook .head {
+    background: url("../img/backgrounds/books4.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    width: 100%;
+    height: 300px;
+    margin: 0;
+    color: white;
+    text-align: center; }
+    .showBook .head .lay {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(33, 36, 37, 0.32); }
+    .showBook .head h1 {
+      margin-top: 0;
+      padding-top: 100px; }
+    .showBook .head h1, .showBook .head h2 {
+      letter-spacing: 10px; }
+
+.title {
+  background-color: white;
+  position: relative;
+  padding: 20px; }
+  .title h1 {
+    letter-spacing: 5px; }
+  .title ul {
+    padding: 0;
+    margin: 0; }
+  .title li {
+    padding-top: 20px;
+    letter-spacing: 2px;
+    color: #454849; }
+
+.con {
+  width: 100%;
+  height: auto;
+  position: relative;
+  margin-bottom: 200px; }
+
+.left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  text-align: left; }
+  .left ul {
+    list-style: none; }
+
+.right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  text-align: right; }
+  .right ul {
+    list-style: none; }
+
+.comment {
+  font-family: 'Poppins', sans-serif;
+  width: 50%;
+  position: relative;
+  border: 0.5px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 50px; }
+  .comment .nick {
+    padding: 5px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 20px; }
+    .comment .nick span, .comment .nick p {
+      padding: 0;
+      margin: 0; }
+  .comment .text {
+    padding: 5px;
+    margin: 0;
+    font-size: 15px; }
+
+.myrate {
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset; }
+
+#rate, #text {
+  width: 100%;
+  padding: 2px;
+  margin: 0 auto;
+  border: none;
+  box-sizing: border-box; }
+
+#rate {
+  font-size: 20px;
+  padding: 10px 0 10px 5px; }
+
+#text {
+  height: 100px;
+  font-size: 20px;
+  border-top: 1px solid #d4d4d4; }
+
+#ratesub {
+  width: 100%;
+  height: 30px;
+  background-color: #2bb171;
+  border: none;
+  box-sizing: border-box;
+  right: 0;
+  top: 0;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  padding: 5px 0 5px 0; }
+
+#ratesub:hover {
+  opacity: 0.9;
+  cursor: pointer; }
+
+#cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.covup {
+  z-index: 1110;
+  background-color: rgba(34, 36, 37, 0.78); }
+
+.covdown {
+  z-index: -1000; }
 
 /*# sourceMappingURL=style_search.css.map */
