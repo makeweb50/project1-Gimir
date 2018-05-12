@@ -1,0 +1,94 @@
+body {
+  background-image: url("../img/backgrounds/books2.jpeg");
+  padding-top: 200px;
+  font-family: 'Roboto', sans-serif; }
+
+.container {
+  width: 25%;
+  height: auto;
+  background-color: rgba(28, 41, 47, 0.9);
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto; }
+  .container .submit {
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    position: relative; }
+    .container .submit button {
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      color: white;
+      text-align: center;
+      margin: 0;
+      font-size: 20px;
+      padding: 10px 0 10px 0;
+      top: 0;
+      border: none; }
+    .container .submit button:hover {
+      opacity: 0.9;
+      cursor: pointer; }
+    .container .submit button:select {
+      border: none; }
+    .container .submit button:first-child {
+      left: 0; }
+    .container .submit button:last-child {
+      right: 0; }
+  .container #title {
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 20px 0 20px 0; }
+  .container .form-container {
+    width: 100%;
+    margin: 0;
+    padding: 0; }
+    .container .form-container input {
+      width: 100%;
+      height: 40px;
+      border: 1px solid #9d9d9d;
+      color: #9d9d9d;
+      font-size: 20px;
+      background-color: inherit;
+      margin: 0 0 10px 0;
+      padding: 2px 2px 2px 5px;
+      box-sizing: border-box; }
+    .container .form-container input[type="submit"] {
+      margin: 0;
+      height: 50px;
+      background-color: #2bb171;
+      text-align: center;
+      border: none;
+      color: white;
+      font-size: 30px;
+      padding: 10px 0 10px 0;
+      box-sizing: border-box; }
+    .container .form-container input[type="submit"]:hover {
+      opacity: 0.9;
+      cursor: pointer; }
+
+.active {
+  background-color: #2bb171;
+  color: white; }
+
+.unactive {
+  background-color: rgba(32, 52, 61, 0.89);
+  color: #9d9d9d; }
+
+@media (max-width: 800px) {
+  .container {
+    width: 35%; } }
+@media (max-width: 580px) {
+  .container {
+    width: 50%; } }
+@media (max-width: 450px) {
+  .container {
+    width: 85%; } }
+@media (max-height: 600px) {
+  body {
+    padding-top: 100px; } }
+
+/*# sourceMappingURL=style-log.css.map */
