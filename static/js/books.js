@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#form').onsubmit = () => {
@@ -12,13 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = JSON.parse(xhr.responseText);
 
-
-
-
-
-
               document.querySelector('.result').innerHTML = "";
-
 
               for (let i = 0; i < data.length; i++)
               {

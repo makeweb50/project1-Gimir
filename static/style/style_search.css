@@ -1,5 +1,6 @@
 body {
   background: url("../img/backgrounds/books2.jpeg") no-repeat center center fixed;
+  background-size: cover;
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0; }
@@ -257,5 +258,44 @@ body {
 
 .covdown {
   z-index: -1000; }
+
+@media (max-width: 768px) {
+  #ser #search, #ser #sub {
+    font-size: 20px; } }
+@media (max-width: 530px) {
+  .showBook {
+    width: 90%; }
+    .showBook .rates > .comment {
+      width: 90%; }
+    .showBook .myrate {
+      width: 90%; }
+
+  #nnav > .resLeft {
+    left: 5px;
+    right: auto; }
+
+  #ser {
+    width: 70%; }
+
+  #logo {
+    display: none; }
+
+  #log {
+    width: 28%; }
+
+  .result .book {
+    width: 28%; } }
+@media (max-width: 330px) {
+  #ser #sub {
+    width: 30%;
+    letter-spacing: normal; }
+
+  #log > a > button {
+    font-size: 20px; }
+
+  .result > .book h2 {
+    font-size: 20px; }
+  .result > .book h3 {
+    font-size: 15px; } }
 
 /*# sourceMappingURL=style_search.css.map */
