@@ -71,40 +71,34 @@ def logout():
     return redirect(url_for('loginn'))
 
 
-@app.route("/comment", methods=["POST"])
-def comment():
-    comm = request.get_json()
-    print(comm['rate'])
-    print(type(comm))
-    user = db.execute("SELECT * FROM users WHERE name = (:name)",
-    {"name": session['username']}).fetchall()
-
-    iduser = user[0][0]
-
-    db.execute("INSERT INTO comments (user_id, grade, comment, book_isbn) VALUES (:user_id, :grade, :comment, :book_isbn)",
-                {"user_id": iduser, "grade": comm['rate'], "comment": comm['text'], "book_isbn": comm['isbn']})
-    db.commit()
-
-    com = db.execute("SELECT * FROM comments WHERE book_isbn = (:isbn) AND user_id = (:user)",
-    {"user": iduser, "isbn": comm['isbn']}).fetchall()
-
-    result = []
-
-    for i in com:
-        result.append({"user": session['username'], "rate": i[1], "comment": i[2], "allow": True})
-
-    return jsonify(result)
-
 
 @app.route("/book", methods=["POST"])
 def book():
+    book = ''
 
-    book = request.form.get("currency")
+    if request.form.get('0') == 'insert':
+        rate = request.form.get("1")
+        text = request.form.get('2')
+        isbn = request.form.get('3')
+        book = request.form.get('4')
+
+        user = db.execute("SELECT * FROM users WHERE name = (:name)",
+        {"name": session['username']}).fetchall()
+
+        iduser = user[0][0]
+        db.execute("INSERT INTO comments (user_id, grade, comment, book_isbn) VALUES (:user_id, :grade, :comment, :book_isbn)",
+                    {"user_id": iduser, "grade": rate, "comment": text, "book_isbn": isbn})
+        db.commit()
+    else:
+        book = request.form.get('0')
+
+    print(book)
     result = []
     oneBook = db.execute("SELECT * FROM books WHERE title = (:book)",
     {"book": book}).fetchall()
     result.append({"title": oneBook[0][2], "author": oneBook[0][3], "isbn": oneBook[0][1], "year": oneBook[0][4]})
     isbn = oneBook[0][1]
+    print(isbn)
     comment = db.execute("SELECT * FROM comments WHERE book_isbn = (:isbn)", {"isbn": isbn}).fetchall()
     comments = []
     if len(comment) is not 0:
@@ -140,7 +134,7 @@ def book():
 @app.route("/booklist", methods=["POST"])
 def booklist():
 
-    book = request.form.get("currency")
+    book = request.form.get('0')
 
     oneBook = db.execute("SELECT * FROM books WHERE title LIKE (:book) OR isbn LIKE (:book) OR author LIKE (:book)",
     {"book": '%' + book + '%'}).fetchall()
