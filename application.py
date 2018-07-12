@@ -21,6 +21,7 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+#DATABASE_URL=postgres://tuuxeeyoerhgbk:c81b3a2a67384608b2b70231cd32c37b05e2cabb921c2373c245b710533d2a81@ec2-54-243-54-6.compute-1.amazonaws.com:5432/d1nnlti4hih9hn
 
 
 @app.route("/")
